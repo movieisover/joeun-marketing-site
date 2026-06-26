@@ -8,6 +8,9 @@ node_modules/
 # Vercel
 .vercel/
 
+# Claude Code 로컬 설정/도구
+.claude/
+
 # OS / 에디터
 .DS_Store
 *.log
