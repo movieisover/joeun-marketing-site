@@ -28,7 +28,9 @@ loadEnv();
 const chatHandler = require('./api/chat.js');
 
 const PORT = process.env.PORT || 3000;
-const ROOT = __dirname;
+// 웹 정적 자산은 public/ 에 둔다 (Vercel 표준 구조와 일치).
+// uploads/ 는 public 밖이라 웹으로 노출되지 않고, 챗 함수만 읽는다.
+const ROOT = path.join(__dirname, 'public');
 
 const MIME = {
   '.html': 'text/html; charset=utf-8',
