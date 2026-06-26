@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+  html { scroll-behavior: smooth; }
+  body { margin: 0; }
+  @keyframes joeunUp { from { transform: translateY(18px); } to { transform: translateY(0); } }
+  @keyframes joeunGrow { from { transform: scaleY(0.3); } to { transform: scaleY(1); } }
+</style>
+</helmet>
+
+<div data-screen-label="조은마케팅 홈페이지" style="font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Segoe UI',sans-serif;color:#1A1A1A;background:#FFFFFF;line-height:1.5;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;">
+
+<!-- ============ NAV ============ -->
+<header style="position:sticky;top:0;z-index:50;background:rgba(255,255,255,0.9);backdrop-filter:saturate(180%) blur(12px);-webkit-backdrop-filter:saturate(180%) blur(12px);box-shadow:{{ navShadow }};transition:box-shadow .25s ease;">
+  <div style="width:min(1200px,92vw);margin:0 auto;height:68px;display:flex;align-items:center;justify-content:space-between;gap:24px;">
+    <a href="#top" style="display:flex;align-items:center;text-decoration:none;flex-shrink:0;">
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQgAAACwCAYAAADzGPBTAAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAABCKADAAQAAAABAAAAsAAAAABaYY5mAAAimklEQVR4Ae2dCZwdVZX/Ty3vvd67052EoNnYQiAhxAAJCSCLBE0g/BGJAgqIKMgOAgLKCMrI+HfA8Q9CVIYQQCHCiMiAgQySACEYFmHEaIBgAgQIZOv19Vtqmd+5VfWWThPijJ/5m+7fTd57Vbdu3br1rXvOPffce6tFGEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABEiABAYNAWvQ3On/5o2eevBoaWk7SvL+c/KTh/7zf/PSvBYJ/C0JuH/LzAZ1XhMmpOXQjxxmp2u+EKRSR0tdplXe77gETKggBnXF2LFvftApiPDP49sKWX94OnRcsUJjQRXxm9LnWDT/JeVaYeVjLWAnHSLOtQOxvd513W3vjprxTK+mqb18zmjPk//j2c4XQ9ueErjIyfeRET5+GFTmw20S2NEIDBoFUVy+56ecGufLYVamp0K7DQ/KDgMLIQzdwJJQQstyJHShM0KoB42J/luSRmJVJZYX4pBb+Ijb8U7+ub1+/f4m+3tjFmeuCpvTXwkLXqQYPM+cjVMsXIFduB1NIljeKgKDQUFYxWf3vsZNWVeJI7YU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b/3tyb4h72/5Mv8yWvWTGJAKwvaLHaFnFyDLEEPtVOg/VARTX9G9D/Dn8wILE490ti2WWgR+gNV+RmegvkUSonpCRcUz6xeicUAfjT6aR/gHdFaiVi5UW80YjrCNeDnL+i3nlV7Xppn3F5YaE7aqTpeSrS1tVW9UxlduV6eK9m5+5Er5wscfMBOtPHWZwIGi5UysE/WnJCMt6iDVl7yYN0HhABZWpQrFd7d2BPR3oW3EZXMPylvvr9Z+h7nbfPaVbaTe9qH23p9J/v0VDorn53rflGLXJqxVOdb4O+DghCG2dYt/+28fkpOmH2y3tZ4buO4sDHGOxmhFSmowx8TCOyz04emQqi6N97w38ScNHpQ33v2hLPrDum0XZvAdVb084MLce8XZZ+y+eKEr+peo7VrhHRd/0ttsp1Qmwp6u1Gs3zV7Recj8jw3znJqR2ehg5CVDOjP5wIfwwPR0O4M3Vn3j2U3yxcNGSK0z3CQqIEUyApErdMnC360dcCAHwg1N2qleJozbDcphF9SHVjiAoSTsHqxgbccs1bXyxJo18k6f1/ENhPvmPZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACZAACfw9EfgvSUcYDpxaa/sAAAAASUVORK5CYII=" alt="조은마케팅 로고" style="height:44px;width:auto;display:block;">
+    </a>
+    <nav style="display:flex;align-items:center;gap:30px;flex-wrap:wrap;justify-content:flex-end;">
+      <a href="#services" style="font-size:15px;font-weight:600;color:#1A1A1A;text-decoration:none;" style-hover="color:#1F7A53;">서비스</a>
+      <a href="#why" style="font-size:15px;font-weight:600;color:#1A1A1A;text-decoration:none;" style-hover="color:#1F7A53;">차별점</a>
+      <a href="#process" style="font-size:15px;font-weight:600;color:#1A1A1A;text-decoration:none;" style-hover="color:#1F7A53;">진행 과정</a>
+      <a href="#pricing" style="font-size:15px;font-weight:600;color:#1A1A1A;text-decoration:none;" style-hover="color:#1F7A53;">요금제</a>
+      <a href="#cases" style="font-size:15px;font-weight:600;color:#1A1A1A;text-decoration:none;" style-hover="color:#1F7A53;">사례</a>
+      <a href="#contact" style="display:inline-flex;align-items:center;gap:7px;background:#F5A623;color:#1A1A1A;font-size:14.5px;font-weight:700;padding:10px 20px;border-radius:9999px;text-decoration:none;box-shadow:0 6px 16px rgba(245,166,35,0.32);" style-hover="background:#e6991a;transform:translateY(-1px);">무료 상담 신청</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section id="top" style="position:relative;overflow:hidden;background:linear-gradient(180deg,#F4FAF7 0%,#FFFFFF 78%);">
+  <div style="position:absolute;top:-120px;right:-100px;width:460px;height:460px;border-radius:50%;background:#E6F4EC;filter:blur(8px);opacity:0.7;"></div>
+  <div style="position:absolute;bottom:-140px;left:-120px;width:360px;height:360px;border-radius:50%;background:#E6F4EC;opacity:0.55;"></div>
+  <div style="position:relative;width:min(1200px,92vw);margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:clamp(40px,5vw,72px);align-items:center;padding:clamp(56px,8vw,104px) 0;">
+    <div style="animation:joeunUp .7s ease;">
+      <span style="display:inline-flex;align-items:center;gap:8px;background:#E6F4EC;color:#10543A;font-size:13.5px;font-weight:700;padding:7px 14px;border-radius:9999px;letter-spacing:-0.01em;">
+        <span style="width:6px;height:6px;border-radius:50%;background:#1F7A53;"></span>중소기업·소상공인 전문 마케팅 파트너
+      </span>
+      <h1 style="margin:22px 0 0;font-size:clamp(34px,5.2vw,58px);font-weight:800;line-height:1.14;letter-spacing:-0.035em;color:#1A1A1A;">작은 가게의 진심을,<br><span style="color:#1F7A53;">더 많은 고객에게.</span></h1>
+      <p style="margin:22px 0 0;font-size:clamp(16px,1.5vw,18.5px);line-height:1.7;color:#475467;max-width:520px;">마케팅 예산과 인력이 부족해도 괜찮습니다. 명확한 진단부터 투명한 리포트까지 — 보여주기식이 아닌, <strong style="color:#1A1A1A;font-weight:700;">매출로 증명하는 실전형 마케팅</strong>을 동네 사장님 곁에서 함께합니다.</p>
+      <div style="margin:32px 0 0;display:flex;flex-wrap:wrap;gap:12px;">
+        <a href="#contact" style="display:inline-flex;align-items:center;gap:8px;background:#F5A623;color:#1A1A1A;font-size:16px;font-weight:700;padding:15px 28px;border-radius:9999px;text-decoration:none;box-shadow:0 10px 24px rgba(245,166,35,0.34);" style-hover="background:#e6991a;transform:translateY(-2px);">무료 상담 신청하기 →</a>
+        <a href="#services" style="display:inline-flex;align-items:center;gap:8px;background:#FFFFFF;color:#1F7A53;font-size:16px;font-weight:700;padding:15px 26px;border-radius:9999px;text-decoration:none;border:1.5px solid #CDE6D9;" style-hover="border-color:#1F7A53;background:#F4FAF7;">서비스 둘러보기</a>
+      </div>
+      <div style="margin:26px 0 0;display:flex;flex-wrap:wrap;align-items:center;gap:18px;color:#6B7280;font-size:14px;font-weight:600;">
+        <span style="display:inline-flex;align-items:center;gap:7px;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M5 12.5 L10 17 L19 7" stroke="#1F7A53" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>첫 진단 상담 무료</span>
+        <span style="display:inline-flex;align-items:center;gap:7px;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M5 12.5 L10 17 L19 7" stroke="#1F7A53" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>1개월 단위 유연 계약</span>
+        <span style="display:inline-flex;align-items:center;gap:7px;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M5 12.5 L10 17 L19 7" stroke="#1F7A53" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>월간 리포트 100% 공개</span>
+      </div>
+    </div>
+
+    <!-- Hero report mock -->
+    <div style="position:relative;animation:joeunUp .9s ease .12s;">
+      <div style="position:absolute;-webkit-transform:rotate(-4deg);transform:rotate(-4deg);top:-18px;left:14px;background:#1F7A53;color:#fff;font-size:13px;font-weight:700;padding:9px 15px;border-radius:12px;box-shadow:0 10px 24px rgba(16,84,58,0.24);z-index:2;">방문 문의 ↑ 312%</div>
+      <div style="background:#FFFFFF;border:1px solid #EAF1ED;border-radius:22px;box-shadow:0 28px 64px -24px rgba(16,84,58,0.32);padding:24px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <div>
+            <div style="font-size:15px;font-weight:800;color:#1A1A1A;letter-spacing:-0.01em;">이번 달 성과 리포트</div>
+            <div style="font-size:12.5px;color:#6B7280;margin-top:3px;">○○ 카페 · 6월</div>
+          </div>
+          <span style="display:inline-flex;align-items:center;gap:6px;background:#E6F4EC;color:#1F7A53;font-size:11.5px;font-weight:800;padding:5px 11px;border-radius:9999px;"><span style="width:6px;height:6px;border-radius:50%;background:#1F7A53;"></span>실시간</span>
+        </div>
+        <div style="margin-top:18px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+          <div style="background:#F7FAF8;border-radius:14px;padding:13px 12px;">
+            <div style="font-size:11.5px;color:#6B7280;font-weight:600;">노출</div>
+            <div style="font-size:21px;font-weight:800;color:#1A1A1A;margin-top:4px;letter-spacing:-0.02em;">48,920</div>
+            <div style="font-size:11.5px;color:#1F7A53;font-weight:700;margin-top:2px;">▲ 86%</div>
+          </div>
+          <div style="background:#F7FAF8;border-radius:14px;padding:13px 12px;">
+            <div style="font-size:11.5px;color:#6B7280;font-weight:600;">방문</div>
+            <div style="font-size:21px;font-weight:800;color:#1A1A1A;margin-top:4px;letter-spacing:-0.02em;">3,140</div>
+            <div style="font-size:11.5px;color:#1F7A53;font-weight:700;margin-top:2px;">▲ 124%</div>
+          </div>
+          <div style="background:#10543A;border-radius:14px;padding:13px 12px;">
+            <div style="font-size:11.5px;color:#A7D8C2;font-weight:600;">문의</div>
+            <div style="font-size:21px;font-weight:800;color:#FFFFFF;margin-top:4px;letter-spacing:-0.02em;">212</div>
+            <div style="font-size:11.5px;color:#F5A623;font-weight:700;margin-top:2px;">▲ 312%</div>
+          </div>
+        </div>
+        <div style="margin-top:18px;height:118px;display:flex;align-items:flex-end;gap:9px;padding:0 2px;">
+          <div style="flex:1;height:34%;background:#D9EAE1;border-radius:7px 7px 0 0;transform-origin:bottom;animation:joeunGrow .8s ease .2s;"></div>
+          <div style="flex:1;height:46%;background:#C2E0D2;border-radius:7px 7px 0 0;transform-origin:bottom;animation:joeunGrow .8s ease .3s;"></div>
+          <div style="flex:1;height:40%;background:#D9EAE1;border-radius:7px 7px 0 0;transform-origin:bottom;animation:joeunGrow .8s ease .4s;"></div>
+          <div style="flex:1;height:62%;background:#7FC0A1;border-radius:7px 7px 0 0;transform-origin:bottom;animation:joeunGrow .8s ease .5s;"></div>
+          <div style="flex:1;height:55%;background:#C2E0D2;border-radius:7px 7px 0 0;transform-origin:bottom;animation:joeunGrow .8s ease .6s;"></div>
+          <div style="flex:1;height:78%;background:#3F9A6E;border-radius:7px 7px 0 0;transform-origin:bottom;animation:joeunGrow .8s ease .7s;"></div>
+          <div style="flex:1;height:100%;background:#1F7A53;border-radius:7px 7px 0 0;transform-origin:bottom;animation:joeunGrow .9s ease .8s;"></div>
+        </div>
+        <div style="margin-top:14px;display:flex;align-items:center;gap:8px;border-top:1px solid #EEF3F0;padding-top:14px;color:#6B7280;font-size:12.5px;font-weight:600;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#1F7A53" stroke-width="2"/><path d="M12 8v4l2.5 2" stroke="#1F7A53" stroke-width="2" stroke-linecap="round"/></svg>
+          광고비·수수료까지 투명하게 공개되는 실제 데이터
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROMISE STRIP ============ -->
+<section style="background:#1F7A53;">
+  <div style="width:min(1200px,92vw);margin:0 auto;padding:30px 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px;">
+    <div style="display:flex;align-items:center;gap:13px;">
+      <span style="width:42px;height:42px;border-radius:11px;background:rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12.5 L10 17 L19 7" stroke="#F5A623" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div><div style="color:#fff;font-size:15.5px;font-weight:700;">첫 진단 상담 무료</div><div style="color:#BFE0D0;font-size:13px;margin-top:1px;">부담 없이 현황 분석부터</div></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:13px;">
+      <span style="width:42px;height:42px;border-radius:11px;background:rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12.5 L10 17 L19 7" stroke="#F5A623" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div><div style="color:#fff;font-size:15.5px;font-weight:700;">1:1 전담 담당자</div><div style="color:#BFE0D0;font-size:13px;margin-top:1px;">업종을 아는 담당자가 직접</div></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:13px;">
+      <span style="width:42px;height:42px;border-radius:11px;background:rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12.5 L10 17 L19 7" stroke="#F5A623" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div><div style="color:#fff;font-size:15.5px;font-weight:700;">월간 성과 리포트 공개</div><div style="color:#BFE0D0;font-size:13px;margin-top:1px;">광고비·수수료까지 투명하게</div></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:13px;">
+      <span style="width:42px;height:42px;border-radius:11px;background:rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12.5 L10 17 L19 7" stroke="#F5A623" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div><div style="color:#fff;font-size:15.5px;font-weight:700;">1개월 단위 유연 계약</div><div style="color:#BFE0D0;font-size:13px;margin-top:1px;">장기 약정 강요 없이</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROBLEM ============ -->
+<section style="background:#F8FAF9;">
+  <div style="width:min(1100px,92vw);margin:0 auto;padding:clamp(64px,9vw,108px) 0;">
+    <div style="text-align:center;max-width:680px;margin:0 auto;">
+      <span style="font-size:14px;font-weight:800;color:#1F7A53;letter-spacing:0.04em;">사장님들의 고민</span>
+      <h2 style="margin:14px 0 0;font-size:clamp(27px,3.6vw,40px);font-weight:800;line-height:1.28;letter-spacing:-0.03em;color:#1A1A1A;">이런 고민, 한 번쯤 있으셨죠?</h2>
+      <p style="margin:16px 0 0;font-size:16.5px;line-height:1.7;color:#6B7280;">중소기업·소상공인 사장님들이 마케팅에서 마주하는 현실적인 어려움입니다.</p>
+    </div>
+    <div style="margin-top:48px;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px;">
+      <div style="background:#fff;border:1px solid #EDF1EF;border-radius:18px;padding:26px;">
+        <div style="font-size:40px;font-weight:800;color:#E6F4EC;line-height:1;">“</div>
+        <div style="margin-top:-6px;font-size:18px;font-weight:800;color:#1A1A1A;letter-spacing:-0.02em;">뭘 해야 할지 모르겠다</div>
+        <p style="margin:10px 0 0;font-size:14.5px;line-height:1.6;color:#6B7280;">채널은 많은데, 우리 가게에 맞는 게 뭔지 모르겠어요.</p>
+      </div>
+      <div style="background:#fff;border:1px solid #EDF1EF;border-radius:18px;padding:26px;">
+        <div style="font-size:40px;font-weight:800;color:#E6F4EC;line-height:1;">“</div>
+        <div style="margin-top:-6px;font-size:18px;font-weight:800;color:#1A1A1A;letter-spacing:-0.02em;">돈만 쓰고 효과가 없다</div>
+        <p style="margin:10px 0 0;font-size:14.5px;line-height:1.6;color:#6B7280;">광고를 돌려도 매출로 연결되지 않아요.</p>
+      </div>
+      <div style="background:#fff;border:1px solid #EDF1EF;border-radius:18px;padding:26px;">
+        <div style="font-size:40px;font-weight:800;color:#E6F4EC;line-height:1;">“</div>
+        <div style="margin-top:-6px;font-size:18px;font-weight:800;color:#1A1A1A;letter-spacing:-0.02em;">할 시간이 없다</div>
+        <p style="margin:10px 0 0;font-size:14.5px;line-height:1.6;color:#6B7280;">장사하기도 바쁜데 블로그·인스타까지 챙길 여력이 없어요.</p>
+      </div>
+      <div style="background:#fff;border:1px solid #EDF1EF;border-radius:18px;padding:26px;">
+        <div style="font-size:40px;font-weight:800;color:#E6F4EC;line-height:1;">“</div>
+        <div style="margin-top:-6px;font-size:18px;font-weight:800;color:#1A1A1A;letter-spacing:-0.02em;">대행사가 못 믿겠다</div>
+        <p style="margin:10px 0 0;font-size:14.5px;line-height:1.6;color:#6B7280;">계약 후 연락 두절, 깜깜이 리포트를 겪어봤어요.</p>
+      </div>
+      <div style="background:#fff;border:1px solid #EDF1EF;border-radius:18px;padding:26px;">
+        <div style="font-size:40px;font-weight:800;color:#E6F4EC;line-height:1;">“</div>
+        <div style="margin-top:-6px;font-size:18px;font-weight:800;color:#1A1A1A;letter-spacing:-0.02em;">예산이 빠듯하다</div>
+        <p style="margin:10px 0 0;font-size:14.5px;line-height:1.6;color:#6B7280;">대기업처럼 큰 비용을 쓸 수는 없어요.</p>
+      </div>
+      <div style="background:#10543A;border-radius:18px;padding:26px;display:flex;flex-direction:column;justify-content:center;">
+        <div style="font-size:17px;font-weight:800;color:#fff;line-height:1.4;letter-spacing:-0.02em;">조은마케팅은 이 다섯 가지를<br><span style="color:#F5A623;">명확한 진단 → 맞춤 실행 → 투명한 리포트</span>로 해결합니다.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOLUTION ============ -->
+<section style="background:#FFFFFF;">
+  <div style="width:min(1100px,92vw);margin:0 auto;padding:clamp(64px,9vw,108px) 0;">
+    <div style="text-align:center;max-width:680px;margin:0 auto;">
+      <span style="font-size:14px;font-weight:800;color:#1F7A53;letter-spacing:0.04em;">해결 방식</span>
+      <h2 style="margin:14px 0 0;font-size:clamp(27px,3.6vw,40px);font-weight:800;line-height:1.28;letter-spacing:-0.03em;color:#1A1A1A;">막연한 활동이 아니라,<br>3단계로 분명하게.</h2>
+    </div>
+    <div style="margin-top:48px;display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:20px;">
+      <div style="position:relative;background:#F7FAF8;border:1px solid #EAF1ED;border-radius:20px;padding:32px 28px;">
+        <div style="font-size:13px;font-weight:800;color:#1F7A53;letter-spacing:0.08em;">STEP 01</div>
+        <h3 style="margin:12px 0 0;font-size:21px;font-weight:800;color:#1A1A1A;letter-spacing:-0.02em;">명확한 진단</h3>
+        <p style="margin:12px 0 0;font-size:15px;line-height:1.7;color:#6B7280;">가게 현황·경쟁사·타겟 고객을 분석해 지금 무엇이 필요한지 숫자로 짚어드립니다.</p>
+      </div>
+      <div style="position:relative;background:#F7FAF8;border:1px solid #EAF1ED;border-radius:20px;padding:32px 28px;">
+        <div style="font-size:13px;font-weight:800;color:#1F7A53;letter-spacing:0.08em;">STEP 02</div>
+        <h3 style="margin:12px 0 0;font-size:21px;font-weight:800;color:#1A1A1A;letter-spacing:-0.02em;">맞춤 실행</h3>
+        <p style="margin:12px 0 0;font-size:15px;line-height:1.7;color:#6B7280;">업종과 예산에 맞는 채널만 골라, 콘텐츠와 광고를 실제 매출 행동으로 설계합니다.</p>
+      </div>
+      <div style="position:relative;background:#10543A;border-radius:20px;padding:32px 28px;">
+        <div style="font-size:13px;font-weight:800;color:#F5A623;letter-spacing:0.08em;">STEP 03</div>
+        <h3 style="margin:12px 0 0;font-size:21px;font-weight:800;color:#fff;letter-spacing:-0.02em;">투명한 리포트</h3>
+        <p style="margin:12px 0 0;font-size:15px;line-height:1.7;color:#BFE0D0;">노출·방문·문의부터 광고비·수수료까지 100% 공개하고, 다음 달 전략을 함께 조정합니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVICES ============ -->
+<section id="services" style="background:#F8FAF9;scroll-margin-top:80px;">
+  <div style="width:min(1200px,92vw);margin:0 auto;padding:clamp(64px,9vw,108px) 0;">
+    <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:20px;">
+      <div style="max-width:560px;">
+        <span style="font-size:14px;font-weight:800;color:#1F7A53;letter-spacing:0.04em;">핵심 서비스</span>
+        <h2 style="margin:14px 0 0;font-size:clamp(27px,3.6vw,40px);font-weight:800;line-height:1.28;letter-spacing:-0.03em;color:#1A1A1A;">매출로 이어지는<br>4가지 마케팅을 한 곳에서.</h2>
+      </div>
+      <p style="font-size:15.5px;line-height:1.7;color:#6B7280;max-width:380px;">업종 특성에 따라 아래 서비스를 조합한 <strong style="color:#1A1A1A;">맞춤 패키지</strong>로 제공합니다.</p>
+    </div>
+    <div style="margin-top:46px;display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:20px;">
+      <!-- 1 -->
+      <div style="background:#fff;border:1px solid #EAF1ED;border-radius:20px;padding:30px;" style-hover="box-shadow:0 18px 40px -22px rgba(16,84,58,0.4);transform:translateY(-3px);">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span style="width:46px;height:46px;border-radius:13px;background:#E6F4EC;color:#1F7A53;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;">01</span>
+          <span style="font-size:12px;font-weight:700;color:#1F7A53;background:#E6F4EC;padding:4px 10px;border-radius:9999px;">로컬 SEO</span>
+        </div>
+        <h3 style="margin:18px 0 0;font-size:19px;font-weight:800;color:#1A1A1A;letter-spacing:-0.02em;">지역·검색 노출</h3>
+        <ul style="margin:14px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:9px;">
+          <li style="display:flex;gap:9px;font-size:14.5px;color:#475467;line-height:1.5;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;margin-top:2px;"><path d="M5 12.5 L10 17 L19 7" stroke="#1F7A53" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>네이버 플레이스 등록·최적화·상위노출</li>
+          <li style="display:flex;gap:9px;font-size:14.5px;color:#475467;line-height:1.5;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;margin-top:2px;"><path d="M5 12.5 L10 17 L19 7" stroke="#1F7A53" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>블로그 체험단·리뷰 마케팅</li>
+          <li style="display:flex;gap:9px;font-size:14.5px;color:#475467;line-height:1.5;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;margin-top:2px;"><path d="M5 12.5 L10 17 L19 7" stroke="#1F7A53" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>구글 비즈니스·카카오맵 정보 관리</li>
+        </ul>
+      </div>
+      <!-- 2 -->
+      <div style="background:#fff;border:1px solid #EAF1ED;border-radius:20px;padding:30px;" style-hover="box-shadow:0 18px 40px -22px rgba(16,84,58,0.4);transform:translateY(-3px);">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span style="width:46px;height:46px;border-radius:13px;background:#E6F4EC;color:#1F7A53;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;">02</span>
+          <span style="font-size:12px;font-weight:700;color:#1F7A53;background:#E6F4EC;padding:4px 10px;border-radius:9999px;">SNS 콘텐츠</span>
+        </div>
+        <h3 style="margin:18px 0 0;font-size:19px;font-weight:800;color:#1A1A1A;letter-spacing:-0.02em;">SNS 콘텐츠 운영</h3>
+        <ul style="margin:14px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:9px;">
+          <li style="display:flex;gap:9px;font-size:14.5px;color:#475467;line-height:1.5;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;margin-top:2px;"><path d="M5 12.5 L10 17 L19 7" stroke="#1F7A53" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>인스타·페이스북 계정 운영·제작</li>
+          <li style="display:flex;gap:9px;font-size:14.5px;color:#475467;line-height:1.5;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;margin-top:2px;"><path d="M5 12.5 L10 17 L19 7" stroke="#1F7A53" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>릴스·쇼츠 숏폼 영상 기획·편집</li>
+          <li style="display:flex;gap:9px;font-size:14.5px;color:#475467;line-height:1.5;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;margin-top:2px;"><path d="M5 12.5 L10 17 L19 7" stroke="#1F7A53" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>카카오톡 채널·단골 메시지 마케팅</li>
+        </ul>
+      </div>
+      <!-- 3 -->
+      <div style="background:#fff;border:1px solid #EAF1ED;border-radius:20px;padding:30px;" style-hover="box-shadow:0 18px 40px -22px rgba(16,84,58,0.4);transform:translateY(-3px);">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span style="width:46px;height:46px;border-radius:13px;background:#E6F4EC;color:#1F7A53;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;">03</span>
+          <span style="font-size:12px;font-weight:700;color:#1F7A53;background:#E6F4EC;padding:4px 10px;border-radius:9999px;">퍼포먼스</span>
+        </div>
+        <h3 style="margin:18px 0 0;font-size:19px;font-weight:800;color:#1A1A1A;letter-spacing:-0.02em;">퍼포먼스 광고</h3>
+        <ul style="margin:14px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:9px;">
+          <li style="display:flex;gap:9px;font-size:14.5px;color:#475467;line-height:1.5;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;margin-top:2px;"><path d="M5 12.5 L10 17 L19 7" stroke="#1F7A53" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>네이버·구글 검색광고(키워드) 운영</li>
+          <li style="display:flex;gap:9px;font-size:14.5px;color:#475467;line-height:1.5;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;margin-top:2px;"><path d="M5 12.5 L10 17 L19 7" stroke="#1F7A53" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>인스타·메타 타겟 광고</li>
+          <li style="display:flex;gap:9px;font-size:14.5px;color:#475467;line-height:1.5;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;margin-top:2px;"><path d="M5 12.5 L10 17 L19 7" stroke="#1F7A53" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>배달앱·예약 플랫폼 광고 최적화</li>
+        </ul>
+      </div>
+      <!-- 4 -->
+      <div style="background:#fff;border:1px solid #EAF1ED;border-radius:20px;padding:30px;" style-hover="box-shadow:0 18px 40px -22px rgba(16,84,58,0.4);transform:translateY(-3px);">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span style="width:46px;height:46px;border-radius:13px;background:#E6F4EC;color:#1F7A53;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;">04</span>
+          <span style="font-size:12px;font-weight:700;color:#1F7A53;background:#E6F4EC;padding:4px 10px;border-radius:9999px;">브랜딩</span>
+        </div>
+        <h3 style="margin:18px 0 0;font-size:19px;font-weight:800;color:#1A1A1A;letter-spacing:-0.02em;">브랜딩·콘텐츠 제작</h3>
+        <ul style="margin:14px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:9px;">
+          <li style="display:flex;gap:9px;font-size:14.5px;color:#475467;line-height:1.5;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;margin-top:2px;"><path d="M5 12.5 L10 17 L19 7" stroke="#1F7A53" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>로고·간판·메뉴판 기본 브랜딩 디자인</li>
+          <li style="display:flex;gap:9px;font-size:14.5px;color:#475467;line-height:1.5;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;margin-top:2px;"><path d="M5 12.5 L10 17 L19 7" stroke="#1F7A53" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>상세페이지·홍보물·전단 제작</li>
+          <li style="display:flex;gap:9px;font-size:14.5px;color:#475467;line-height:1.5;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;margin-top:2px;"><path d="M5 12.5 L10 17 L19 7" stroke="#1F7A53" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>가게 사진·영상 촬영</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHY / DIFFERENTIATORS ============ -->
+<section id="why" style="background:#10543A;scroll-margin-top:70px;position:relative;overflow:hidden;">
+  <div style="position:absolute;top:-80px;right:-60px;width:320px;height:320px;border-radius:50%;background:rgba(31,122,83,0.4);"></div>
+  <div style="position:relative;width:min(1080px,92vw);margin:0 auto;padding:clamp(64px,9vw,108px) 0;">
+    <div style="text-align:center;max-width:640px;margin:0 auto;">
+      <span style="font-size:14px;font-weight:800;color:#F5A623;letter-spacing:0.04em;">왜 조은마케팅일까요?</span>
+      <h2 style="margin:14px 0 0;font-size:clamp(27px,3.6vw,40px);font-weight:800;line-height:1.28;letter-spacing:-0.03em;color:#fff;">대행사 불신, 우리는 다르게 일합니다.</h2>
+    </div>
+    <div style="margin-top:46px;display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:stretch;">
+      <div style="border-radius:18px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);padding:24px;">
+        <div style="font-size:14px;font-weight:800;color:#9DBCAE;letter-spacing:0.02em;text-align:center;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,0.1);">흔한 대행사</div>
+      </div>
+      <div style="border-radius:18px;background:#fff;padding:24px;box-shadow:0 24px 50px -24px rgba(0,0,0,0.5);">
+        <div style="font-size:14px;font-weight:800;color:#1F7A53;letter-spacing:0.02em;text-align:center;padding-bottom:14px;border-bottom:1px solid #EAF1ED;display:flex;align-items:center;justify-content:center;gap:7px;"><span style="width:18px;height:18px;border-radius:6px;background:#1F7A53;display:flex;align-items:center;justify-content:center;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M5 12.5 L10 17 L19 7" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>조은마케팅</div>
+      </div>
+    </div>
+    <div style="margin-top:14px;display:flex;flex-direction:column;gap:12px;">
+      <!-- rows -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+        <div style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:18px 22px;color:#C9DBD2;font-size:15px;font-weight:500;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;"><path d="M7 7l10 10M17 7L7 17" stroke="#6E8C7E" stroke-width="2.4" stroke-linecap="round"/></svg>정액 비용, 효과는 불투명</div>
+        <div style="display:flex;align-items:center;gap:12px;background:#fff;border-radius:16px;padding:18px 22px;color:#1A1A1A;font-size:15px;font-weight:700;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;"><path d="M5 12.5 L10 17 L19 7" stroke="#1F7A53" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>성과 지표 기반 운영 + 월간 리포트 공개</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+        <div style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:18px 22px;color:#C9DBD2;font-size:15px;font-weight:500;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;"><path d="M7 7l10 10M17 7L7 17" stroke="#6E8C7E" stroke-width="2.4" stroke-linecap="round"/></svg>담당자가 자주 바뀜</div>
+        <div style="display:flex;align-items:center;gap:12px;background:#fff;border-radius:16px;padding:18px 22px;color:#1A1A1A;font-size:15px;font-weight:700;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;"><path d="M5 12.5 L10 17 L19 7" stroke="#1F7A53" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>업종 전담 담당자 1:1 배정</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+        <div style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:18px 22px;color:#C9DBD2;font-size:15px;font-weight:500;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;"><path d="M7 7l10 10M17 7L7 17" stroke="#6E8C7E" stroke-width="2.4" stroke-linecap="round"/></svg>대형 광고주 위주</div>
+        <div style="display:flex;align-items:center;gap:12px;background:#fff;border-radius:16px;padding:18px 22px;color:#1A1A1A;font-size:15px;font-weight:700;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;"><path d="M5 12.5 L10 17 L19 7" stroke="#1F7A53" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>중소기업·소상공인 전문</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+        <div style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:18px 22px;color:#C9DBD2;font-size:15px;font-weight:500;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;"><path d="M7 7l10 10M17 7L7 17" stroke="#6E8C7E" stroke-width="2.4" stroke-linecap="round"/></svg>장기 약정 강요</div>
+        <div style="display:flex;align-items:center;gap:12px;background:#fff;border-radius:16px;padding:18px 22px;color:#1A1A1A;font-size:15px;font-weight:700;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;"><path d="M5 12.5 L10 17 L19 7" stroke="#1F7A53" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>1개월 단위 유연 계약 가능</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+        <div style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:18px 22px;color:#C9DBD2;font-size:15px;font-weight:500;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;"><path d="M7 7l10 10M17 7L7 17" stroke="#6E8C7E" stroke-width="2.4" stroke-linecap="round"/></svg>광고비·수수료가 불명확</div>
+        <div style="display:flex;align-items:center;gap:12px;background:#fff;border-radius:16px;padding:18px 22px;color:#1A1A1A;font-size:15px;font-weight:700;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;"><path d="M5 12.5 L10 17 L19 7" stroke="#1F7A53" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>광고비·수수료 완전 분리 공개</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROCESS ============ -->
+<section id="process" style="background:#FFFFFF;scroll-margin-top:80px;">
+  <div style="width:min(1100px,92vw);margin:0 auto;padding:clamp(64px,9vw,108px) 0;">
+    <div style="text-align:center;max-width:640px;margin:0 auto;">
+      <span style="font-size:14px;font-weight:800;color:#1F7A53;letter-spacing:0.04em;">진행 과정</span>
+      <h2 style="margin:14px 0 0;font-size:clamp(27px,3.6vw,40px);font-weight:800;line-height:1.28;letter-spacing:-0.03em;color:#1A1A1A;">상담부터 리포트까지, 5단계.</h2>
+    </div>
+    <div style="margin-top:48px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;">
+      <div style="background:#F7FAF8;border:1px solid #EAF1ED;border-radius:18px;padding:26px 22px;">
+        <span style="width:40px;height:40px;border-radius:50%;background:#1F7A53;color:#fff;font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center;">1</span>
+        <h3 style="margin:16px 0 0;font-size:16.5px;font-weight:800;color:#1A1A1A;letter-spacing:-0.02em;">무료 상담·진단</h3>
+        <p style="margin:8px 0 0;font-size:13.5px;line-height:1.6;color:#6B7280;">가게 현황·경쟁사·타겟 분석 (무료)</p>
+      </div>
+      <div style="background:#F7FAF8;border:1px solid #EAF1ED;border-radius:18px;padding:26px 22px;">
+        <span style="width:40px;height:40px;border-radius:50%;background:#1F7A53;color:#fff;font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center;">2</span>
+        <h3 style="margin:16px 0 0;font-size:16.5px;font-weight:800;color:#1A1A1A;letter-spacing:-0.02em;">맞춤 전략 제안</h3>
+        <p style="margin:8px 0 0;font-size:13.5px;line-height:1.6;color:#6B7280;">업종·예산에 맞는 채널·실행안 제시</p>
+      </div>
+      <div style="background:#F7FAF8;border:1px solid #EAF1ED;border-radius:18px;padding:26px 22px;">
+        <span style="width:40px;height:40px;border-radius:50%;background:#1F7A53;color:#fff;font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center;">3</span>
+        <h3 style="margin:16px 0 0;font-size:16.5px;font-weight:800;color:#1A1A1A;letter-spacing:-0.02em;">계약 및 셋업</h3>
+        <p style="margin:8px 0 0;font-size:13.5px;line-height:1.6;color:#6B7280;">계정 세팅·콘텐츠 기획·초기 자산 제작</p>
+      </div>
+      <div style="background:#F7FAF8;border:1px solid #EAF1ED;border-radius:18px;padding:26px 22px;">
+        <span style="width:40px;height:40px;border-radius:50%;background:#1F7A53;color:#fff;font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center;">4</span>
+        <h3 style="margin:16px 0 0;font-size:16.5px;font-weight:800;color:#1A1A1A;letter-spacing:-0.02em;">실행 및 운영</h3>
+        <p style="margin:8px 0 0;font-size:13.5px;line-height:1.6;color:#6B7280;">콘텐츠 발행·광고 집행·실시간 관리</p>
+      </div>
+      <div style="background:#10543A;border-radius:18px;padding:26px 22px;">
+        <span style="width:40px;height:40px;border-radius:50%;background:#F5A623;color:#1A1A1A;font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center;">5</span>
+        <h3 style="margin:16px 0 0;font-size:16.5px;font-weight:800;color:#fff;letter-spacing:-0.02em;">리포트 및 개선</h3>
+        <p style="margin:8px 0 0;font-size:13.5px;line-height:1.6;color:#BFE0D0;">월간 리포트 + 다음 달 전략 조정</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRICING ============ -->
+<sc-if value="{{ showPricing }}" hint-placeholder-val="{{ true }}">
+<section id="pricing" style="background:#F8FAF9;scroll-margin-top:70px;">
+  <div style="width:min(1140px,92vw);margin:0 auto;padding:clamp(64px,9vw,108px) 0;">
+    <div style="text-align:center;max-width:640px;margin:0 auto;">
+      <span style="font-size:14px;font-weight:800;color:#1F7A53;letter-spacing:0.04em;">요금제</span>
+      <h2 style="margin:14px 0 0;font-size:clamp(27px,3.6vw,40px);font-weight:800;line-height:1.28;letter-spacing:-0.03em;color:#1A1A1A;">가게 규모에 맞게, 부담 없이.</h2>
+      <p style="margin:16px 0 0;font-size:15.5px;color:#6B7280;">예시 금액이며, 첫 진단 상담 후 맞춤 견적을 안내드립니다.</p>
+    </div>
+    <div style="margin-top:46px;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;align-items:start;">
+      <!-- 스타트 -->
+      <div style="background:#fff;border:1px solid #EAF1ED;border-radius:22px;padding:32px 28px;">
+        <div style="font-size:15px;font-weight:800;color:#1F7A53;">스타트</div>
+        <div style="margin:8px 0 0;font-size:14px;color:#6B7280;">1인 소상공인</div>
+        <div style="margin:18px 0 0;display:flex;align-items:baseline;gap:4px;"><span style="font-size:34px;font-weight:800;color:#1A1A1A;letter-spacing:-0.03em;">30만원</span><span style="font-size:15px;color:#6B7280;font-weight:600;">~ / 월</span></div>
+        <div style="margin:22px 0 0;height:1px;background:#EEF3F0;"></div>
+        <ul style="margin:22px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:11px;">
+          <li style="display:flex;gap:9px;font-size:14.5px;color:#475467;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;margin-top:2px;"><path d="M5 12.5 L10 17 L19 7" stroke="#1F7A53" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>채널 1~2개 운영</li>
+          <li style="display:flex;gap:9px;font-size:14.5px;color:#475467;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;margin-top:2px;"><path d="M5 12.5 L10 17 L19 7" stroke="#1F7A53" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>콘텐츠 월 4건</li>
+          <li style="display:flex;gap:9px;font-size:14.5px;color:#475467;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;margin-top:2px;"><path d="M5 12.5 L10 17 L19 7" stroke="#1F7A53" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>광고 운영 선택</li>
+          <li style="display:flex;gap:9px;font-size:14.5px;color:#475467;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;margin-top:2px;"><path d="M5 12.5 L10 17 L19 7" stroke="#1F7A53" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>월간 리포트 · 담당자 공유</li>
+        </ul>
+        <a href="#contact" style="margin-top:26px;display:block;text-align:center;background:#F4FAF7;color:#1F7A53;font-size:15px;font-weight:700;padding:13px;border-radius:11px;text-decoration:none;border:1.5px solid #CDE6D9;" style-hover="background:#E6F4EC;">상담 신청</a>
+      </div>
+      <!-- 그로스 (추천) -->
+      <div style="position:relative;background:#10543A;border-radius:22px;padding:34px 28px;box-shadow:0 30px 60px -28px rgba(16,84,58,0.6);transform:translateY(-6px);">
+        <div style="position:absolute;top:18px;right:20px;background:#F5A623;color:#1A1A1A;font-size:12px;font-weight:800;padding:5px 12px;border-radius:9999px;">추천</div>
+        <div style="font-size:15px;font-weight:800;color:#F5A623;">그로스</div>
+        <div style="margin:8px 0 0;font-size:14px;color:#BFE0D0;">성장기 가게</div>
+        <div style="margin:18px 0 0;display:flex;align-items:baseline;gap:4px;"><span style="font-size:34px;font-weight:800;color:#fff;letter-spacing:-0.03em;">60만원</span><span style="font-size:15px;color:#BFE0D0;font-weight:600;">~ / 월</span></div>
+        <div style="margin:22px 0 0;height:1px;background:rgba(255,255,255,0.14);"></div>
+        <ul style="margin:22px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:11px;">
+          <li style="display:flex;gap:9px;font-size:14.5px;color:#EAF4EF;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;margin-top:2px;"><path d="M5 12.5 L10 17 L19 7" stroke="#F5A623" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>채널 3~4개 운영</li>
+          <li style="display:flex;gap:9px;font-size:14.5px;color:#EAF4EF;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;margin-top:2px;"><path d="M5 12.5 L10 17 L19 7" stroke="#F5A623" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>콘텐츠 월 8건</li>
+          <li style="display:flex;gap:9px;font-size:14.5px;color:#EAF4EF;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;margin-top:2px;"><path d="M5 12.5 L10 17 L19 7" stroke="#F5A623" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>광고 운영 포함</li>
+          <li style="display:flex;gap:9px;font-size:14.5px;color:#EAF4EF;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;margin-top:2px;"><path d="M5 12.5 L10 17 L19 7" stroke="#F5A623" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>격주 리포트 · 1:1 전담</li>
+        </ul>
+        <a href="#contact" style="margin-top:26px;display:block;text-align:center;background:#F5A623;color:#1A1A1A;font-size:15px;font-weight:800;padding:13px;border-radius:11px;text-decoration:none;box-shadow:0 10px 22px rgba(245,166,35,0.34);" style-hover="background:#e6991a;">상담 신청하기</a>
+      </div>
+      <!-- 프리미엄 -->
+      <div style="background:#fff;border:1px solid #EAF1ED;border-radius:22px;padding:32px 28px;">
+        <div style="font-size:15px;font-weight:800;color:#1F7A53;">프리미엄</div>
+        <div style="margin:8px 0 0;font-size:14px;color:#6B7280;">다점포·중소기업</div>
+        <div style="margin:18px 0 0;display:flex;align-items:baseline;gap:4px;"><span style="font-size:34px;font-weight:800;color:#1A1A1A;letter-spacing:-0.03em;">100만원</span><span style="font-size:15px;color:#6B7280;font-weight:600;">~ / 월</span></div>
+        <div style="margin:22px 0 0;height:1px;background:#EEF3F0;"></div>
+        <ul style="margin:22px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:11px;">
+          <li style="display:flex;gap:9px;font-size:14.5px;color:#475467;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;margin-top:2px;"><path d="M5 12.5 L10 17 L19 7" stroke="#1F7A53" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>풀 채널 운영</li>
+          <li style="display:flex;gap:9px;font-size:14.5px;color:#475467;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;margin-top:2px;"><path d="M5 12.5 L10 17 L19 7" stroke="#1F7A53" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>콘텐츠 월 16건+</li>
+          <li style="display:flex;gap:9px;font-size:14.5px;color:#475467;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;margin-top:2px;"><path d="M5 12.5 L10 17 L19 7" stroke="#1F7A53" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>광고 운영 포함</li>
+          <li style="display:flex;gap:9px;font-size:14.5px;color:#475467;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;margin-top:2px;"><path d="M5 12.5 L10 17 L19 7" stroke="#1F7A53" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>주간 리포트 · 1:1 + 디자이너</li>
+        </ul>
+        <a href="#contact" style="margin-top:26px;display:block;text-align:center;background:#F4FAF7;color:#1F7A53;font-size:15px;font-weight:700;padding:13px;border-radius:11px;text-decoration:none;border:1.5px solid #CDE6D9;" style-hover="background:#E6F4EC;">상담 신청</a>
+      </div>
+    </div>
+    <div style="margin-top:26px;text-align:center;display:flex;align-items:center;justify-content:center;gap:9px;color:#6B7280;font-size:13.5px;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#1F7A53" stroke-width="1.8"/><path d="M12 11v5M12 8h.01" stroke="#1F7A53" stroke-width="2" stroke-linecap="round"/></svg>
+      광고비는 요금제와 별도이며, 사장님 계정으로 직접 집행되어 투명하게 관리됩니다.
+    </div>
+  </div>
+</section>
+</sc-if>
+
+<!-- ============ CASES ============ -->
+<section id="cases" style="background:#FFFFFF;scroll-margin-top:80px;">
+  <div style="width:min(1140px,92vw);margin:0 auto;padding:clamp(64px,9vw,108px) 0;">
+    <div style="text-align:center;max-width:640px;margin:0 auto;">
+      <span style="font-size:14px;font-weight:800;color:#1F7A53;letter-spacing:0.04em;">고객 사례</span>
+      <h2 style="margin:14px 0 0;font-size:clamp(27px,3.6vw,40px);font-weight:800;line-height:1.28;letter-spacing:-0.03em;color:#1A1A1A;">숫자로 증명한 변화.</h2>
+      <p style="margin:14px 0 0;font-size:14px;color:#9AA5B1;">* 이해를 돕기 위한 가상 예시입니다.</p>
+    </div>
+    <div style="margin-top:46px;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;">
+      <!-- case 1 -->
+      <div style="background:#fff;border:1px solid #EAF1ED;border-radius:20px;overflow:hidden;" style-hover="box-shadow:0 18px 40px -22px rgba(16,84,58,0.4);transform:translateY(-3px);">
+        <div style="height:150px;background:repeating-linear-gradient(135deg,#EFF5F1,#EFF5F1 11px,#E6F0EA 11px,#E6F0EA 22px);display:flex;align-items:center;justify-content:center;">
+          <span style="font-family:ui-monospace,Menlo,monospace;font-size:11.5px;color:#7E9C8C;letter-spacing:0.02em;">[ 현장 사진 — 동네 카페 ]</span>
+        </div>
+        <div style="padding:26px;">
+          <span style="font-size:12.5px;font-weight:700;color:#1F7A53;background:#E6F4EC;padding:5px 11px;border-radius:9999px;">동네 카페</span>
+          <h3 style="margin:14px 0 0;font-size:17px;font-weight:800;color:#1A1A1A;letter-spacing:-0.02em;">신규 손님 유입 부족</h3>
+          <p style="margin:9px 0 0;font-size:14px;line-height:1.6;color:#6B7280;">플레이스 최적화 · 릴스 운영으로 검색 노출 강화</p>
+          <div style="margin:18px 0 0;padding-top:16px;border-top:1px solid #EEF3F0;display:flex;align-items:baseline;gap:8px;">
+            <span style="font-size:28px;font-weight:800;color:#1F7A53;letter-spacing:-0.03em;">3배</span>
+            <span style="font-size:14px;color:#6B7280;font-weight:600;">월 방문 문의 증가</span>
+          </div>
+        </div>
+      </div>
+      <!-- case 2 -->
+      <div style="background:#fff;border:1px solid #EAF1ED;border-radius:20px;overflow:hidden;" style-hover="box-shadow:0 18px 40px -22px rgba(16,84,58,0.4);transform:translateY(-3px);">
+        <div style="height:150px;background:repeating-linear-gradient(135deg,#EFF5F1,#EFF5F1 11px,#E6F0EA 11px,#E6F0EA 22px);display:flex;align-items:center;justify-content:center;">
+          <span style="font-family:ui-monospace,Menlo,monospace;font-size:11.5px;color:#7E9C8C;letter-spacing:0.02em;">[ 현장 사진 — 인테리어 ]</span>
+        </div>
+        <div style="padding:26px;">
+          <span style="font-size:12.5px;font-weight:700;color:#1F7A53;background:#E6F4EC;padding:5px 11px;border-radius:9999px;">인테리어 소공인</span>
+          <h3 style="margin:14px 0 0;font-size:17px;font-weight:800;color:#1A1A1A;letter-spacing:-0.02em;">온라인 견적 문의 없음</h3>
+          <p style="margin:9px 0 0;font-size:14px;line-height:1.6;color:#6B7280;">키워드 광고 · 상세페이지 개선으로 전환 강화</p>
+          <div style="margin:18px 0 0;padding-top:16px;border-top:1px solid #EEF3F0;display:flex;align-items:baseline;gap:8px;">
+            <span style="font-size:28px;font-weight:800;color:#1F7A53;letter-spacing:-0.03em;">월 12건</span>
+            <span style="font-size:14px;color:#6B7280;font-weight:600;">견적 문의 확보</span>
+          </div>
+        </div>
+      </div>
+      <!-- case 3 -->
+      <div style="background:#fff;border:1px solid #EAF1ED;border-radius:20px;overflow:hidden;" style-hover="box-shadow:0 18px 40px -22px rgba(16,84,58,0.4);transform:translateY(-3px);">
+        <div style="height:150px;background:repeating-linear-gradient(135deg,#EFF5F1,#EFF5F1 11px,#E6F0EA 11px,#E6F0EA 22px);display:flex;align-items:center;justify-content:center;">
+          <span style="font-family:ui-monospace,Menlo,monospace;font-size:11.5px;color:#7E9C8C;letter-spacing:0.02em;">[ 현장 사진 — 정육점 ]</span>
+        </div>
+        <div style="padding:26px;">
+          <span style="font-size:12.5px;font-weight:700;color:#1F7A53;background:#E6F4EC;padding:5px 11px;border-radius:9999px;">정육점</span>
+          <h3 style="margin:14px 0 0;font-size:17px;font-weight:800;color:#1A1A1A;letter-spacing:-0.02em;">단골 이탈</h3>
+          <p style="margin:9px 0 0;font-size:14px;line-height:1.6;color:#6B7280;">카카오채널 단골 메시지로 재구매 유도</p>
+          <div style="margin:18px 0 0;padding-top:16px;border-top:1px solid #EEF3F0;display:flex;align-items:baseline;gap:8px;">
+            <span style="font-size:28px;font-weight:800;color:#1F7A53;letter-spacing:-0.03em;">재구매율</span>
+            <span style="font-size:14px;color:#6B7280;font-weight:600;">상승</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VALUES ============ -->
+<section style="background:#F8FAF9;">
+  <div style="width:min(1100px,92vw);margin:0 auto;padding:clamp(56px,7vw,88px) 0;">
+    <div style="text-align:center;">
+      <span style="font-size:14px;font-weight:800;color:#1F7A53;letter-spacing:0.04em;">우리가 일하는 방식</span>
+      <h2 style="margin:12px 0 0;font-size:clamp(24px,3vw,34px);font-weight:800;letter-spacing:-0.03em;color:#1A1A1A;">가게가 커지면, 우리도 큽니다.</h2>
+    </div>
+    <div style="margin-top:38px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;">
+      <div style="background:#fff;border:1px solid #EAF1ED;border-radius:18px;padding:26px;text-align:center;">
+        <div style="font-size:17px;font-weight:800;color:#1F7A53;letter-spacing:-0.02em;">성과 우선</div>
+        <p style="margin:9px 0 0;font-size:14px;line-height:1.6;color:#6B7280;">보여주기식이 아닌 매출·방문·문의 등 숫자로 증명</p>
+      </div>
+      <div style="background:#fff;border:1px solid #EAF1ED;border-radius:18px;padding:26px;text-align:center;">
+        <div style="font-size:17px;font-weight:800;color:#1F7A53;letter-spacing:-0.02em;">투명성</div>
+        <p style="margin:9px 0 0;font-size:14px;line-height:1.6;color:#6B7280;">광고비·수수료·리포트를 100% 공개</p>
+      </div>
+      <div style="background:#fff;border:1px solid #EAF1ED;border-radius:18px;padding:26px;text-align:center;">
+        <div style="font-size:17px;font-weight:800;color:#1F7A53;letter-spacing:-0.02em;">현장 이해</div>
+        <p style="margin:9px 0 0;font-size:14px;line-height:1.6;color:#6B7280;">업종별 특성을 아는 담당자가 직접 운영</p>
+      </div>
+      <div style="background:#fff;border:1px solid #EAF1ED;border-radius:18px;padding:26px;text-align:center;">
+        <div style="font-size:17px;font-weight:800;color:#1F7A53;letter-spacing:-0.02em;">동반 성장</div>
+        <p style="margin:9px 0 0;font-size:14px;line-height:1.6;color:#6B7280;">가게가 커지면 함께 큰다는 장기 파트너십</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT / CTA ============ -->
+<section id="contact" style="background:#1F7A53;scroll-margin-top:70px;position:relative;overflow:hidden;">
+  <div style="position:absolute;top:-90px;left:-70px;width:320px;height:320px;border-radius:50%;background:rgba(16,84,58,0.5);"></div>
+  <div style="position:absolute;bottom:-110px;right:-80px;width:300px;height:300px;border-radius:50%;background:rgba(16,84,58,0.45);"></div>
+  <div style="position:relative;width:min(1080px,92vw);margin:0 auto;padding:clamp(64px,9vw,104px) 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(36px,5vw,64px);align-items:center;">
+    <div>
+      <span style="display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.14);color:#fff;font-size:13.5px;font-weight:700;padding:7px 14px;border-radius:9999px;">첫 상담은 무료입니다</span>
+      <h2 style="margin:20px 0 0;font-size:clamp(28px,4vw,44px);font-weight:800;line-height:1.22;letter-spacing:-0.03em;color:#fff;">우리 가게에 맞는<br>마케팅 전략,<br><span style="color:#F5A623;">부담 없이 진단받아 보세요.</span></h2>
+      <p style="margin:20px 0 0;font-size:16px;line-height:1.7;color:#D5E8DE;max-width:420px;">현황과 목표만 알려주시면, 업종에 맞는 채널과 실행안을 무료로 정리해 드립니다. 계약은 그 다음에 결정하셔도 됩니다.</p>
+      <div style="margin:28px 0 0;display:flex;flex-direction:column;gap:12px;">
+        <div style="display:flex;align-items:center;gap:11px;color:#fff;font-size:15px;font-weight:600;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none"><path d="M5 5h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-1z" stroke="#F5A623" stroke-width="1.8" stroke-linejoin="round"/></svg>(전화번호 기입)</div>
+        <div style="display:flex;align-items:center;gap:11px;color:#fff;font-size:15px;font-weight:600;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2.5" stroke="#F5A623" stroke-width="1.8"/><path d="M4 7l8 6 8-6" stroke="#F5A623" stroke-width="1.8" stroke-linejoin="round"/></svg>(이메일 기입)</div>
+      </div>
+    </div>
+
+    <!-- Form card -->
+    <div style="background:#fff;border-radius:24px;padding:clamp(26px,3.5vw,38px);box-shadow:0 30px 70px -28px rgba(0,0,0,0.5);">
+      <sc-if value="{{ notSubmitted }}" hint-placeholder-val="{{ true }}">
+      <form onSubmit="{{ submit }}">
+        <div style="font-size:20px;font-weight:800;color:#1A1A1A;letter-spacing:-0.02em;">무료 상담 신청</div>
+        <p style="margin:7px 0 0;font-size:14px;color:#6B7280;">영업일 기준 1일 이내에 연락드립니다.</p>
+        <div style="margin-top:22px;display:flex;flex-direction:column;gap:14px;">
+          <label style="display:block;">
+            <span style="font-size:13.5px;font-weight:700;color:#1A1A1A;">이름 / 가게명</span>
+            <input value="{{ form.name }}" onChange="{{ setName }}" placeholder="예) 김조은 / 조은카페" style="margin-top:7px;width:100%;box-sizing:border-box;border:1.5px solid #E5E7EB;border-radius:11px;padding:13px 15px;font-size:15px;font-family:inherit;color:#1A1A1A;outline:none;background:#FBFCFB;" style-focus="border-color:#1F7A53;background:#fff;">
+          </label>
+          <label style="display:block;">
+            <span style="font-size:13.5px;font-weight:700;color:#1A1A1A;">연락처</span>
+            <input value="{{ form.phone }}" onChange="{{ setPhone }}" placeholder="예) 010-1234-5678" style="margin-top:7px;width:100%;box-sizing:border-box;border:1.5px solid #E5E7EB;border-radius:11px;padding:13px 15px;font-size:15px;font-family:inherit;color:#1A1A1A;outline:none;background:#FBFCFB;" style-focus="border-color:#1F7A53;background:#fff;">
+          </label>
+          <label style="display:block;">
+            <span style="font-size:13.5px;font-weight:700;color:#1A1A1A;">업종</span>
+            <input value="{{ form.biz }}" onChange="{{ setBiz }}" placeholder="예) 카페 / 음식점 / 인테리어" style="margin-top:7px;width:100%;box-sizing:border-box;border:1.5px solid #E5E7EB;border-radius:11px;padding:13px 15px;font-size:15px;font-family:inherit;color:#1A1A1A;outline:none;background:#FBFCFB;" style-focus="border-color:#1F7A53;background:#fff;">
+          </label>
+          <label style="display:block;">
+            <span style="font-size:13.5px;font-weight:700;color:#1A1A1A;">문의 내용</span>
+            <textarea value="{{ form.msg }}" onChange="{{ setMsg }}" rows="3" placeholder="현재 고민이나 목표를 적어주세요." style="margin-top:7px;width:100%;box-sizing:border-box;border:1.5px solid #E5E7EB;border-radius:11px;padding:13px 15px;font-size:15px;font-family:inherit;color:#1A1A1A;outline:none;background:#FBFCFB;resize:vertical;" style-focus="border-color:#1F7A53;background:#fff;"></textarea>
+          </label>
+        </div>
+        <button type="submit" style="margin-top:20px;width:100%;background:#F5A623;color:#1A1A1A;font-size:16px;font-weight:800;font-family:inherit;padding:15px;border:none;border-radius:12px;cursor:pointer;box-shadow:0 10px 24px rgba(245,166,35,0.34);" style-hover="background:#e6991a;">무료 상담 신청하기</button>
+        <p style="margin:13px 0 0;text-align:center;font-size:12.5px;color:#9AA5B1;">신청 시 개인정보는 상담 목적으로만 사용됩니다.</p>
+      </form>
+      </sc-if>
+      <sc-if value="{{ submitted }}" hint-placeholder-val="{{ false }}">
+      <div style="text-align:center;padding:24px 8px;">
+        <div style="width:64px;height:64px;border-radius:50%;background:#E6F4EC;display:flex;align-items:center;justify-content:center;margin:0 auto;">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none"><path d="M5 12.5 L10 17 L19 7" stroke="#1F7A53" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3 style="margin:20px 0 0;font-size:21px;font-weight:800;color:#1A1A1A;letter-spacing:-0.02em;">상담 신청이 접수되었습니다</h3>
+        <p style="margin:12px 0 0;font-size:15px;line-height:1.7;color:#6B7280;">소중한 문의 감사합니다.<br>영업일 기준 1일 이내에 담당자가 연락드리겠습니다.</p>
+        <button onClick="{{ reset }}" style="margin-top:24px;background:#F4FAF7;color:#1F7A53;font-size:15px;font-weight:700;font-family:inherit;padding:12px 24px;border:1.5px solid #CDE6D9;border-radius:11px;cursor:pointer;" style-hover="background:#E6F4EC;">새 상담 신청하기</button>
+      </div>
+      </sc-if>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer style="background:#0F3F2C;color:#A7C4B6;">
+  <div style="width:min(1140px,92vw);margin:0 auto;padding:56px 0 36px;">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:36px;">
+      <div style="max-width:320px;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span style="width:34px;height:34px;border-radius:10px;background:#1F7A53;display:flex;align-items:center;justify-content:center;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none"><path d="M4 16.5 L9.5 10.5 L13.5 13.5 L20 6" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="20" cy="6" r="2.5" fill="#F5A623"/></svg></span>
+          <span style="font-size:17px;font-weight:800;color:#fff;letter-spacing:-0.02em;">조은마케팅</span>
+        </div>
+        <p style="margin:16px 0 0;font-size:14px;line-height:1.7;">작은 가게의 진심을, 더 많은 고객에게.<br>중소기업·소상공인을 위한 실전형 마케팅 파트너.</p>
+      </div>
+      <div>
+        <div style="font-size:13px;font-weight:800;color:#fff;letter-spacing:0.02em;">서비스</div>
+        <div style="margin-top:16px;display:flex;flex-direction:column;gap:11px;font-size:14px;">
+          <a href="#services" style="color:#A7C4B6;text-decoration:none;" style-hover="color:#fff;">지역·검색 노출</a>
+          <a href="#services" style="color:#A7C4B6;text-decoration:none;" style-hover="color:#fff;">SNS 콘텐츠 운영</a>
+          <a href="#services" style="color:#A7C4B6;text-decoration:none;" style-hover="color:#fff;">퍼포먼스 광고</a>
+          <a href="#services" style="color:#A7C4B6;text-decoration:none;" style-hover="color:#fff;">브랜딩·콘텐츠 제작</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:13px;font-weight:800;color:#fff;letter-spacing:0.02em;">바로가기</div>
+        <div style="margin-top:16px;display:flex;flex-direction:column;gap:11px;font-size:14px;">
+          <a href="#why" style="color:#A7C4B6;text-decoration:none;" style-hover="color:#fff;">차별점</a>
+          <a href="#process" style="color:#A7C4B6;text-decoration:none;" style-hover="color:#fff;">진행 과정</a>
+          <a href="#pricing" style="color:#A7C4B6;text-decoration:none;" style-hover="color:#fff;">요금제</a>
+          <a href="#cases" style="color:#A7C4B6;text-decoration:none;" style-hover="color:#fff;">고객 사례</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:13px;font-weight:800;color:#fff;letter-spacing:0.02em;">문의</div>
+        <div style="margin-top:16px;display:flex;flex-direction:column;gap:11px;font-size:14px;">
+          <span>전화 · (전화번호 기입)</span>
+          <span>이메일 · (이메일 기입)</span>
+          <span>홈페이지 · (URL 기입)</span>
+          <a href="#contact" style="margin-top:4px;display:inline-flex;width:fit-content;align-items:center;gap:7px;background:#F5A623;color:#1A1A1A;font-size:13.5px;font-weight:800;padding:9px 16px;border-radius:9999px;text-decoration:none;" style-hover="background:#e6991a;">무료 상담 신청 →</a>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:40px;padding-top:24px;border-top:1px solid rgba(255,255,255,0.1);display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;font-size:13px;color:#7FA593;">
+      <span>© 2026 조은마케팅 (JOEUN MARKETING). All rights reserved.</span>
+      <span>신뢰감 있게, 쉽게, 진심으로.</span>
+    </div>
+  </div>
+</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900},&quot;showPricing&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  state = { scrolled: false, submitted: false, form: { name: '', phone: '', biz: '', msg: '' } };
+
+  componentDidMount() {
+    this._onScroll = () => {
+      const s = window.scrollY > 12;
+      if (s !== this.state.scrolled) this.setState({ scrolled: s });
+    };
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+  }
+  componentWillUnmount() {
+    if (this._onScroll) window.removeEventListener('scroll', this._onScroll);
+  }
+
+  _set(key, e) {
+    const v = e && e.target ? e.target.value : '';
+    this.setState(s => ({ form: { ...s.form, [key]: v } }));
+  }
+
+  renderVals() {
+    const showPricing = this.props.showPricing ?? true;
+    return {
+      navShadow: this.state.scrolled
+        ? '0 1px 0 #E5E7EB, 0 8px 28px rgba(16,84,58,0.08)'
+        : '0 1px 0 #E5E7EB',
+      showPricing,
+      submitted: this.state.submitted,
+      notSubmitted: !this.state.submitted,
+      form: this.state.form,
+      setName: (e) => this._set('name', e),
+      setPhone: (e) => this._set('phone', e),
+      setBiz: (e) => this._set('biz', e),
+      setMsg: (e) => this._set('msg', e),
+      submit: (e) => { if (e && e.preventDefault) e.preventDefault(); this.setState({ submitted: true }); },
+      reset: () => this.setState({ submitted: false, form: { name: '', phone: '', biz: '', msg: '' } }),
+    };
+  }
+}
+</script>
+<!-- 조은마케팅 상담 챗봇 위젯 (body 에 독립 마운트) -->
+<script src="/chatbot.js" defer></script>
+</body>
+</html>
